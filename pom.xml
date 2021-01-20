@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.technocratsid.spring.spark</groupId>
-	<artifactId>spring-spark-word-count</artifactId>
+	<artifactId>StudentRequestClassifier</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Spring Spark Word Count</name>
+	<name>Spring Spark</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -38,6 +38,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 	</dependencies>
 
