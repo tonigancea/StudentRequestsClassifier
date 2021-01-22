@@ -1,4 +1,4 @@
-package com.technocratsid;
+package com;
 
 import java.util.ArrayList;
 import java.util.Arrays;
