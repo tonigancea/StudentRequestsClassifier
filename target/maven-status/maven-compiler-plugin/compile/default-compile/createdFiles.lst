@@ -1,0 +1,7 @@
+com/SparkTest.class
+com/config/SparkConfig.class
+com/controller/WordCountController.class
+com/repository/StudentRepository.class
+com/model/Student.class
+com/SpringSparkWordCountApplication.class
+com/service/WordCountService.class

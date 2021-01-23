@@ -1,0 +1,25 @@
+body {
+    background-color: steelblue;
+}
+
+.container {
+    text-align: center;
+}
+
+#label_welcome {
+    display: block;
+    font-family: Calibri;
+    color: white;
+    font-size: x-large;
+    padding: 20px;
+}
+
+#submission {
+    font-family: Calibri;
+    background-color: coral;
+    border-color: coral;
+    font-size: large;
+    border-radius: 5px;
+    width: auto;
+    height: 40px;
+}

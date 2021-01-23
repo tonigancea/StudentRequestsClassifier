@@ -2,17 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Platforma pentru cererile studentilor pentru secretariat</title>
     <script type="text/javascript" src="/js/script.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <html>
 <body>
 
-<h1>My First Heading</h1>
+<div class = "container">
+    <label id = "label_welcome">Scrieti in casuta de mai jos cererea pentru secretariat</label>
+    <br>
 
-<p>My first paragraph.</p>
+    <form>
+        <textarea name="message" rows="40" cols="140"></textarea>
+        <br><br>
+        <input type="submit" value="Apasati pentru a trimite cererea" id = "submission">
+    </form>
+</div>
 
 </body>
 </html>

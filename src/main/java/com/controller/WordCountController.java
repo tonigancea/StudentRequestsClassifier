@@ -19,11 +19,11 @@ public class WordCountController {
 	@Autowired
 	WordCountService service;
 
-	private final StudentRepository repository;
+	//private final StudentRepository repository;
 
-	public WordCountController(StudentRepository repository) {
-		this.repository = repository;
-	}
+	//public WordCountController(StudentRepository repository) {
+	//	this.repository = repository;
+	//}
 
 	@GetMapping(path = "/wordcount")
 	public Map<String, Long> count(@RequestParam(required = false) String words) {

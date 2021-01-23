@@ -16,14 +16,14 @@ public class SparkConfig {
 	@Value("${spark.master}")
 	private String masterUri;
 
-	@Bean
-	public SparkConf conf() {
-		return new SparkConf().setAppName(appName).setMaster(masterUri);
-	}
+	//@Bean
+	//public SparkConf conf() {
+	//	return new SparkConf().setAppName(appName).setMaster(masterUri);
+	//}
 
-	@Bean
-	public JavaSparkContext sc() {
-		return new JavaSparkContext(conf());
-	}
+	//@Bean
+	//public JavaSparkContext javaSparkContext() {
+	//	return new JavaSparkContext(new SparkConf().setAppName(appName).setMaster(masterUri));
+	//}
 
 }

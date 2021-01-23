@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class WordCountService {
 
-	@Autowired
 	JavaSparkContext sc;
+
+//	public WordCountService() {
+//		sc = new JavaSparkContext();
+//	}
 
 	public Map<String, Long> getCount(List<String> wordList) {
 		JavaRDD<String> words = sc.parallelize(wordList);

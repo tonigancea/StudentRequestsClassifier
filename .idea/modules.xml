@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/StudentRequestClassifier.iml" filepath="$PROJECT_DIR$/StudentRequestClassifier.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-spark-word-count.iml" filepath="$PROJECT_DIR$/spring-spark-word-count.iml" />
     </modules>
   </component>
