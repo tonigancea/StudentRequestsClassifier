@@ -23,3 +23,20 @@ body {
     width: auto;
     height: 40px;
 }
+
+.label_name {
+    padding: 10px;
+    color: white;
+}
+
+textarea {
+    white-space: normal;
+    text-align: justify;
+    -moz-text-align-last: center;
+    text-align-last: center;
+}
+
+.autosize {
+    resize: none;
+    overflow: hidden;
+}

@@ -1,26 +1,173 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
 <head>
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
     <title>Platforma pentru cererile studentilor pentru secretariat</title>
-    <script type="text/javascript" src="/js/script.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script type='text/javascript' src='/js/script.js'></script>
+    <link rel='stylesheet' href='css/style.css'>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
 </head>
 <body>
 
-<html>
-<body>
+    <div class = 'container'>
+        <label id = 'label_welcome'>Completati mai jos datele necesare cererii pentru secretariat</label>
+        <br>
 
-<div class = "container">
-    <label id = "label_welcome">Scrieti in casuta de mai jos cererea pentru secretariat</label>
-    <br>
+        <form>
+            <div>
+                <div>
+                    <label class = 'label_name'>Prenume</label>
+                </div>
+                <div>
+                    <input class = 'name_input' id = 'surname'>
+                </div>
+            </div>
+            <br>
+            <div>
+                <div>
+                    <label class = 'label_name'>Nume</label>
+                </div>
+                <div>
+                    <input class = 'surname_input' id = 'name'>
+                </div>
+            </div>
+            <br>
+        </form>
 
-    <form>
-        <textarea name="message" rows="40" cols="140"></textarea>
-        <br><br>
-        <input type="submit" value="Apasati pentru a trimite cererea" id = "submission">
-    </form>
-</div>
+        <div style='display: compact'>
+            <div>
+                <label for='select_options' class = 'label_name'>Alege o optiune</label>
+            </div>
+            <div>
+                <select name='options' id='select_options'>
+                    <option disabled selected value> -- select an option -- </option>
+                    <option value='1' >Cerere anumita grupa / serie</option>
+                    <option value='2'>Cerere pentru a fi impreuna cu alte persoane</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <br>
 
+        <div id = 'colleagues' style = 'display: none;'>
+            <button id = 'add_person' onclick='add_person()'>Adauga persoana</button>
+            <form>
+                <div>
+                    <div>
+                        <label class = 'label_name'>Prenume</label>
+                    </div>
+                    <div>
+                        <input class = 'name_input' id = 'colleague_name'>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div>
+                        <label class = 'label_name'>Nume</label>
+                    </div>
+                    <div>
+                        <input class = 'surname_input' id = 'colleague_surname'>
+                    </div>
+                </div>
+                <br>
+            </form>
+            <textarea id = 'list_colleagues' class='autosize'></textarea>
+        </div>
+
+        <div id = 'specific' style = 'display: none;'>
+            <form>
+                <div>
+                    <div>
+                        <label class = 'label_name'>Grupa</label>
+                    </div>
+                    <div>
+                        <input id = 'group'>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div>
+                        <label class = 'label_name'>Seria</label>
+                    </div>
+                    <div>
+                        <input id = 'series'>
+                    </div>
+                </div>
+                <br>
+            </form>
+        </div>
+        <br>
+        <br>
+        <button id = 'send_data' onclick='request()'> Trimite cererea catre secretariat </button>
+    </div>
+
+    <script language='JavaScript' type='text/javascript'>
+        var option;
+
+        $('#select_options').change(function(){
+            option = $(this).find('option:selected').attr('value');
+            console.log(option);
+
+            const x = document.getElementById('specific');
+            const y = document.getElementById('colleagues');
+
+            if (option === '1') {
+                x.style.display = 'block';
+                y.style.display = 'none';
+            } else {
+                y.style.display = 'block';
+                x.style.display = 'none';
+            }
+            
+        });
+
+        function add_person() {
+            const name = document.getElementById('colleague_name').value;
+            const surname = document.getElementById('colleague_surname').value;
+            const list_colleagues = document.getElementById('list_colleagues');
+            list_colleagues.innerHTML += name + ' ' + surname + '\n';
+            autosize();
+        }
+
+        function autosize(){
+            var text = $('.autosize');
+
+            text.each(function(){
+                $(this).attr('rows',1);
+                resize($(this));
+            });
+
+            text.on('input', function(){
+                resize($(this));
+            });
+
+            function resize ($text) {
+                $text.css('height', 'auto');
+                $text.css('height', $text[0].scrollHeight+'px');
+            }
+        }
+
+        function request() {
+            var body = {};
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            body['name'] = name;
+            body['surname'] = surname;
+            body['option'] = option;
+            if(option === '1') {
+                const group = document.getElementById('group').value;
+                const series = document.getElementById('series').value;
+                body['group'] = group;
+                body['series'] = series;
+            } else {
+                const group = document.getElementById('group').value;
+                const list_colleagues = document.getElementById('list_colleagues');
+                body['list_colleagues'] = list_colleagues;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8080/cerere', true);
+            xhr.send(JSON.stringify(body));
+        }
+    </script>
 </body>
 </html>
