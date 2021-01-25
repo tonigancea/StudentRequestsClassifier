@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +27,15 @@ public class StudentRequestClassifierService {
 	@Autowired
 	private StudentRepository repository;
 
-	JavaSparkContext sc = new JavaSparkContext();
-
-//	public WordCountService() {
-//		sc = new JavaSparkContext();
-
-	private List<Student> students;
+	JavaSparkContext sc;
 
 	public void init() {
-		students = students = repository.findAll();
+		System.out.println("lol");
+		sc = new JavaSparkContext(new SparkConf().setAppName("Student Request Classifier").setMaster("local"));
 	}
 
 	public long add(JSONObject request) throws JSONException {
+		List<Student> students = repository.findAll();
 		String surname = request.getString("surname");
 		String name = request.getString("name");
 		int choice = Integer.parseInt(request.getString("option"));
@@ -56,24 +54,63 @@ public class StudentRequestClassifierService {
 					student.setGroups(groups);
 					student.setSeries(series);
 				}
-				else
+				else {
+					System.out.println(colleagues);
 					student.setColleagues(colleagues);
-
+				}
 				if(student.getChoice() != choice && student.getChoice() != 3)
 					student.setChoice(3);
-
+				repository.save(student);
+				groupStatistics();
+				seriesStatistics();
+				colleaguesStatistics();
 				return student.getId();
 			}
 		}
 		Student student = new Student(surname, name, choice, groups, series, colleagues);
 		repository.save(student);
+		groupStatistics();
+		seriesStatistics();
+		colleaguesStatistics();
 		return student.getId();
+	}
+
+	public void groupStatistics() {
+		List<Student> students = repository.findAll();
+		String groups = "";
+		for(Student student : students)
+			groups += student.getGroups() + " ";
+		Map<String, Long> statistics = getCount(Arrays.asList(groups.split(" ")));
+		System.out.println("Group Number of apparitions");
+		for(String group : statistics.keySet())
+			System.out.println(" " + group + "  " + statistics.get(group));
+	}
+
+	public void seriesStatistics() {
+		List<Student> students = repository.findAll();
+		String series = "";
+		for(Student student : students)
+			series += student.getSeries() + " ";
+		Map<String, Long> statistics = getCount(Arrays.asList(series.split(" ")));
+		System.out.println("Series Number of apparitions");
+		for(String serie : statistics.keySet())
+			System.out.println("  " + serie + "   " + statistics.get(serie));
+	}
+
+	public void colleaguesStatistics() {
+		List<Student> students = repository.findAll();
+		String colleagues = "";
+		for(Student student : students)
+			colleagues += student.getColleagues();
+		Map<String, Long> statistics = getCount(Arrays.asList(colleagues.split("\\n")));
+		System.out.println("Colleague Number of apparitions");
+		for(String colleague : statistics.keySet())
+			System.out.println(" " + colleague + "  " + statistics.get(colleague));
 	}
 
 	public Map<String, Long> getCount(List<String> wordList) {
 		JavaRDD<String> words = sc.parallelize(wordList);
-		Map<String, Long> wordCounts = words.countByValue();
-		return wordCounts;
+		return words.countByValue();
 	}
 
 }

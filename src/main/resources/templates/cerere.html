@@ -16,19 +16,19 @@
         <form>
             <div>
                 <div>
-                    <label class = 'label_name'>Prenume</label>
+                    <label class = 'label_name'>Nume</label>
                 </div>
                 <div>
-                    <input class = 'name_input' id = 'surname'>
+                    <input class = 'name_input' id = 'name'>
                 </div>
             </div>
             <br>
             <div>
                 <div>
-                    <label class = 'label_name'>Nume</label>
+                    <label class = 'label_name'>Prenume</label>
                 </div>
                 <div>
-                    <input class = 'surname_input' id = 'name'>
+                    <input class = 'surname_input' id = 'surname'>
                 </div>
             </div>
             <br>
@@ -54,7 +54,7 @@
             <form>
                 <div>
                     <div>
-                        <label class = 'label_name'>Prenume</label>
+                        <label class = 'label_name'>Nume</label>
                     </div>
                     <div>
                         <input class = 'name_input' id = 'colleague_name'>
@@ -63,7 +63,7 @@
                 <br>
                 <div>
                     <div>
-                        <label class = 'label_name'>Nume</label>
+                        <label class = 'label_name'>Prenume</label>
                     </div>
                     <div>
                         <input class = 'surname_input' id = 'colleague_surname'>
@@ -102,7 +102,7 @@
     </div>
 
     <script language='JavaScript' type='text/javascript'>
-        var option;
+        var option = '0';
 
         $('#select_options').change(function(){
             option = $(this).find('option:selected').attr('value');
@@ -124,7 +124,15 @@
         function add_person() {
             const name = document.getElementById('colleague_name').value;
             const surname = document.getElementById('colleague_surname').value;
-            const list_colleagues = document.getElementById('list_colleagues');
+            if(name === '') {
+                alert('Introduceti numele persoanei!');
+                return;
+            }
+            if(surname === '') {
+                alert('Introduceti prenumele persoanei!');
+                return;
+            }
+            const list_colleagues = document.getElementById('list_colleagues')
             list_colleagues.innerHTML += name + ' ' + surname + '\n';
             autosize();
         }
@@ -149,23 +157,47 @@
 
         function request() {
             var body = {};
+            if(option === '0') {
+                alert('Alegeti tipul de cerere!');
+                return;
+            }
             const name = document.getElementById('name').value;
             const surname = document.getElementById('surname').value;
             body['name'] = name;
             body['surname'] = surname;
             body['option'] = option;
+            if(name === '') {
+                alert('Introduceti numele!');
+                return;
+            }
+            if(surname === '') {
+                alert('Introduceti prenumele!');
+                return;
+            }
             if(option === '1') {
                 const group = document.getElementById('group').value;
                 const series = document.getElementById('series').value;
+                if(group === '') {
+                    alert('Introduceti grupa!');
+                    return;
+                }
+                if(series === '') {
+                    alert('Introduceti seria!');
+                    return;
+                }
                 body['group'] = group;
                 body['series'] = series;
             } else {
-                const group = document.getElementById('group').value;
-                const list_colleagues = document.getElementById('list_colleagues');
-                body['list_colleagues'] = list_colleagues;
+                const list_colleagues = document.getElementById('list_colleagues').value;
+                if(list_colleagues === '') {
+                    alert('Adaugati cel putin o persoana!');
+                    return;
+                }
+                body['colleagues'] = list_colleagues;
+
             }
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/cerere', true);
+            xhr.open('POST', 'http://localhost:8080/cerere');
             xhr.send(JSON.stringify(body));
         }
     </script>
