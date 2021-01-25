@@ -1,5 +1,7 @@
 package com.controller;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -10,13 +12,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class StudentRequestClassifierController {
 
 	@Autowired
-	StudentRequestClassifierService service;
+	private StudentRequestClassifierService service;
 
-	//private final StudentRepository repository;
+
+
+
 
 	//public WordCountController(StudentRepository repository) {
 	//	this.repository = repository;
@@ -29,11 +33,13 @@ public class StudentRequestClassifierController {
 
 	@GetMapping(path = "/cerere")
 	public String send() {
+		service.init();
 		return "cerere";
 	}
 
 	@PostMapping(path = "/cerere")
-	public void recieve(@RequestBody String body) {
+	public void recieve(@RequestBody String body) throws JSONException {
+		service.add(new JSONObject(body));
 		System.out.println(body);
 	}
 
