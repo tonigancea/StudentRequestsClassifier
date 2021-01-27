@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistici</title>
+</head>
+<body>
+    <div display="inline">
+        <label>Statistici bazate pe cererile studentilor</label>
+        <br>
+        <textarea id="groups" rows="4" cols="50">
+            At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+        <textarea id="series" rows="4" cols="50">
+          At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+        <textarea id="students" rows="4" cols="50">
+          At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+    </div>
+    <script language='JavaScript' type='text/javascript'>
+        var xhr = new XMLHttpRequest();
+        var test = {}
+        xhr.onload = () => {
+                response = xhr.responseText;
+                console.log(response);
+        };
+        xhr.open('POST', 'http://localhost:8080/statistici');
+        test["test"] = "lol";
+        xhr.send(JSON.stringify(test));
+    </script>
+
+</body>
+</html>

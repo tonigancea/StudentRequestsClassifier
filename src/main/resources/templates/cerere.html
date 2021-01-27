@@ -2,7 +2,7 @@
 <html lang='en' xmlns:th='http://www.thymeleaf.org'>
 <head>
     <meta charset='UTF-8'>
-    <title>Platforma pentru cererile studentilor pentru secretariat</title>
+    <title>Cerere</title>
     <script type='text/javascript' src='/js/script.js'></script>
     <link rel='stylesheet' href='css/style.css'>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
@@ -11,9 +11,8 @@
 
     <div class = 'container'>
         <label id = 'label_welcome'>Completati mai jos datele necesare cererii pentru secretariat</label>
-        <br>
-
         <form>
+            <br>
             <div>
                 <div>
                     <label class = 'label_name'>Nume</label>
@@ -50,8 +49,11 @@
         <br>
 
         <div id = 'colleagues' style = 'display: none;'>
-            <button id = 'add_person' onclick='add_person()'>Adauga persoana</button>
+            <div>
+                <button id = 'add_person' onclick='add_person()'>Adauga student</button>
+            </div>
             <form>
+                <br>
                 <div>
                     <div>
                         <label class = 'label_name'>Nume</label>
@@ -125,11 +127,11 @@
             const name = document.getElementById('colleague_name').value;
             const surname = document.getElementById('colleague_surname').value;
             if(name === '') {
-                alert('Introduceti numele persoanei!');
+                alert('Introduceti numele studentului!');
                 return;
             }
             if(surname === '') {
-                alert('Introduceti prenumele persoanei!');
+                alert('Introduceti prenumele studentului!');
                 return;
             }
             const list_colleagues = document.getElementById('list_colleagues')
@@ -190,15 +192,16 @@
             } else {
                 const list_colleagues = document.getElementById('list_colleagues').value;
                 if(list_colleagues === '') {
-                    alert('Adaugati cel putin o persoana!');
+                    alert('Adaugati cel putin un student!');
                     return;
                 }
                 body['colleagues'] = list_colleagues;
 
             }
-            var xhr = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest()
             xhr.open('POST', 'http://localhost:8080/cerere');
             xhr.send(JSON.stringify(body));
+
         }
     </script>
 </body>

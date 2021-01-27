@@ -27,10 +27,14 @@ public class StudentRequestClassifierService {
 	@Autowired
 	private StudentRepository repository;
 
-	JavaSparkContext sc;
+	private JavaSparkContext sc;
+
+	private boolean init = false;
 
 	public void init() {
-		System.out.println("lol");
+		if(init)
+				return;
+		init = true;
 		sc = new JavaSparkContext(new SparkConf().setAppName("Student Request Classifier").setMaster("local"));
 	}
 

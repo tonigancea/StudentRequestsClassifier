@@ -3,6 +3,8 @@ package com.controller;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -28,6 +30,18 @@ public class StudentRequestClassifierController {
 	public void recieve(@RequestBody String body) throws JSONException {
 		System.out.println(body);
 		service.add(new JSONObject(body));
+	}
+
+	@GetMapping(path = "/statistici")
+	public String send_statistics() {
+		service.init();
+		return "statistici";
+	}
+
+	@PostMapping(path = "/statistici")
+	public ResponseEntity<String> recieve_statistics(@RequestBody String body) throws JSONException {
+		System.out.println(body);
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 
 }
