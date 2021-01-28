@@ -80,7 +80,8 @@ public class StudentRequestClassifierService {
 		Map<String, Long> statistics;
 
 		for(Student student : students)
-			groups += student.getGroups() + " ";
+			if(student.getChoice() == 1 || student.getChoice() == 3)
+				groups += student.getGroups() + " ";
 
 		statistics = getCount(Arrays.asList(groups.split(" ")));
 
@@ -97,7 +98,8 @@ public class StudentRequestClassifierService {
 		Map<String, Long> statistics;
 
 		for(Student student : students)
-			series += student.getSeries() + " ";
+			if(student.getChoice() == 1 || student.getChoice() == 3)
+				series += student.getSeries() + " ";
 
 		statistics = getCount(Arrays.asList(series.split(" ")));
 
@@ -114,7 +116,8 @@ public class StudentRequestClassifierService {
 		Map<String, Long> statistics;
 
 		for(Student student : students)
-			colleagues += student.getColleagues();
+			if(student.getChoice() == 2 || student.getChoice() == 3)
+				colleagues += student.getColleagues();
 
 		statistics = getCount(Arrays.asList(colleagues.split("\\n")));
 

@@ -8,19 +8,14 @@
     <div display="inline">
         <label>Statistici bazate pe cererile studentilor</label>
         <br>
-        <textarea id="groups" rows="4" cols="50">
-            At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-        </textarea>
-        <textarea id="series" rows="4" cols="50">
-          At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-        </textarea>
-        <textarea id="students" rows="4" cols="50">
-          At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-        </textarea>
+        <textarea id="groups" rows="4" cols="50"></textarea>
+        <textarea id="series" rows="4" cols="50"></textarea>
+        <textarea id="students" rows="4" cols="50"></textarea>
     </div>
     <script language='JavaScript' type='text/javascript'>
         var xhr = new XMLHttpRequest();
         xhr.onload = () => {
+            console.log(xhr.responseText);
             response = JSON.parse(xhr.responseText);
             const groups = document.getElementById('groups');
             const series = document.getElementById('series');
@@ -28,7 +23,6 @@
             groups.innerHTML = response['groups'];
             series.innerHTML = response['series'];
             students.innerHTML = response['students'];
-            console.log(response);
         };
         xhr.open('POST', 'http://localhost:8080/statistici');
         xhr.send();
