@@ -26,6 +26,8 @@ public class Student {
 
     private String colleagues;
 
+    public static int[] lengths = new int[]{5, 6, 7};
+
     public Student(String surname, String name, int choice, String groups, String series, String colleagues) {
         this.surname = surname;
         this.name = name;
@@ -33,6 +35,13 @@ public class Student {
         this.groups = groups;
         this.series = series;
         this.colleagues = colleagues;
+        if(groups.length() > lengths[0])
+            lengths[0] = groups.length();
+        if(groups.length() > lengths[1])
+            lengths[1] = groups.length();
+        for(String colleague : colleagues.split("\\n"))
+            if(colleague.length() > lengths[2])
+                lengths[2] = colleague.length();
     }
 
     public Student() {

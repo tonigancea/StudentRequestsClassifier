@@ -65,51 +65,63 @@ public class StudentRequestClassifierService {
 				if(student.getChoice() != choice && student.getChoice() != 3)
 					student.setChoice(3);
 				repository.save(student);
-				groupStatistics();
-				seriesStatistics();
-				colleaguesStatistics();
 				return student.getId();
 			}
 		}
 		Student student = new Student(surname, name, choice, groups, series, colleagues);
 		repository.save(student);
-		groupStatistics();
-		seriesStatistics();
-		colleaguesStatistics();
 		return student.getId();
 	}
 
-	public void groupStatistics() {
-		List<Student> students = repository.findAll();
+	public String groupStatistics() {
+		String print = spacing("Group", Student.lengths[0]) + ' ' + spacing("Apparitions", 11);
 		String groups = "";
+		List<Student> students = repository.findAll();
+		Map<String, Long> statistics;
+
 		for(Student student : students)
 			groups += student.getGroups() + " ";
-		Map<String, Long> statistics = getCount(Arrays.asList(groups.split(" ")));
-		System.out.println("Group Number of apparitions");
+
+		statistics = getCount(Arrays.asList(groups.split(" ")));
+
 		for(String group : statistics.keySet())
-			System.out.println(" " + group + "  " + statistics.get(group));
+			print += '\n' + spacing(group, Student.lengths[0]) + ' ' + spacing(Long.toString(statistics.get(group)), 11);
+
+		return print;
 	}
 
-	public void seriesStatistics() {
-		List<Student> students = repository.findAll();
+	public String seriesStatistics() {
+		String print = spacing("Series", Student.lengths[1]) + ' ' + spacing("Apparitions", 11);
 		String series = "";
+		List<Student> students = repository.findAll();
+		Map<String, Long> statistics;
+
 		for(Student student : students)
 			series += student.getSeries() + " ";
-		Map<String, Long> statistics = getCount(Arrays.asList(series.split(" ")));
-		System.out.println("Series Number of apparitions");
+
+		statistics = getCount(Arrays.asList(series.split(" ")));
+
 		for(String serie : statistics.keySet())
-			System.out.println("  " + serie + "   " + statistics.get(serie));
+			print += '\n' + spacing(serie, Student.lengths[1]) + ' ' + spacing(Long.toString(statistics.get(serie)), 11);
+
+		return print;
 	}
 
-	public void colleaguesStatistics() {
-		List<Student> students = repository.findAll();
+	public String colleaguesStatistics() {
+		String print = spacing("Student", Student.lengths[2]) + ' ' + spacing("Apparitions", 11);
 		String colleagues = "";
+		List<Student> students = repository.findAll();
+		Map<String, Long> statistics;
+
 		for(Student student : students)
 			colleagues += student.getColleagues();
-		Map<String, Long> statistics = getCount(Arrays.asList(colleagues.split("\\n")));
-		System.out.println("Colleague Number of apparitions");
+
+		statistics = getCount(Arrays.asList(colleagues.split("\\n")));
+
 		for(String colleague : statistics.keySet())
-			System.out.println(" " + colleague + "  " + statistics.get(colleague));
+			print += '\n' + spacing(colleague, Student.lengths[2]) + ' ' + spacing(Long.toString(statistics.get(colleague)), 11);
+
+		return print;
 	}
 
 	public Map<String, Long> getCount(List<String> wordList) {
@@ -117,4 +129,19 @@ public class StudentRequestClassifierService {
 		return words.countByValue();
 	}
 
+	public String spacing(String string, int length) {
+		String spaced;
+
+		length -= string.length();
+
+		if(length % 2 == 0)
+			spaced = string;
+		else
+			spaced = string + ' ';
+
+		for(length /= 2; length > 0; length--)
+			spaced = ' ' + spaced + ' ';
+
+		return spaced;
+	}
 }

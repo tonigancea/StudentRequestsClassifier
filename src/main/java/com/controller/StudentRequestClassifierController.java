@@ -39,9 +39,12 @@ public class StudentRequestClassifierController {
 	}
 
 	@PostMapping(path = "/statistici")
-	public ResponseEntity<String> recieve_statistics(@RequestBody String body) throws JSONException {
-		System.out.println(body);
-		return new ResponseEntity<>(body, HttpStatus.OK);
+	public ResponseEntity<String> recieve_statistics() throws JSONException {
+		JSONObject body = new JSONObject();
+		body.put("groups", service.groupStatistics());
+		body.put("series", service.seriesStatistics());
+		body.put("students", service.colleaguesStatistics());
+		return new ResponseEntity<>(body.toString(), HttpStatus.OK);
 	}
 
 }

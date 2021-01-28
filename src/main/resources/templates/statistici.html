@@ -20,14 +20,18 @@
     </div>
     <script language='JavaScript' type='text/javascript'>
         var xhr = new XMLHttpRequest();
-        var test = {}
         xhr.onload = () => {
-                response = xhr.responseText;
-                console.log(response);
+            response = JSON.parse(xhr.responseText);
+            const groups = document.getElementById('groups');
+            const series = document.getElementById('series');
+            const students = document.getElementById('students');
+            groups.innerHTML = response['groups'];
+            series.innerHTML = response['series'];
+            students.innerHTML = response['students'];
+            console.log(response);
         };
         xhr.open('POST', 'http://localhost:8080/statistici');
-        test["test"] = "lol";
-        xhr.send(JSON.stringify(test));
+        xhr.send();
     </script>
 
 </body>
