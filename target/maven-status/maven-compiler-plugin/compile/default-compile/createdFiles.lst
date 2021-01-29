@@ -1,0 +1,6 @@
+com/config/SparkConfig.class
+com/controller/StudentRequestClassifierController.class
+com/service/StudentRequestClassifierService.class
+com/SparkTest.class
+com/repository/StudentRepository.class
+com/model/Student.class

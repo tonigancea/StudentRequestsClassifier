@@ -7,14 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-spark-word-count" />
+        <module name="StudentRequestClassifier" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-spark-word-count" target="1.8" />
+      <module name="StudentRequestClassifier" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="StudentRequestClassifier" options="-parameters" />
       <module name="spring-spark-word-count" options="-parameters" />
     </option>
   </component>
